@@ -169,3 +169,11 @@ $  mrskew --rc=cull-snmfc.rc --rc=call-db-flamegraph.rc oracle-trace/flamegraph-
 $  mrskew --rc=cull-snmfc.rc --rc=call-os-flamegraph.rc oracle-trace/flamegraph-test.trc | ./stackcollapse-oratrace.pl  | ./flamegraph.pl > flamegraph-os.svg
 ```
 
+### One Liner
+
+All mrskew output, OS and DB calls, by SQL_ID and CursorID
+
+```text
+ mrskew --sort='no' --nohead --nofoot --top=0 --rc=cull-snmfc.rc --alldepths --nohistogram --group='$line . q{,} . $sqlid . q{,} . $cursor_id . q{,} . $name . q{,} . sprintf(q{%-12d}, ($ela ? $ela : $e) * 1e6)'  oracle-trace/flamegraph-test.trc | ./stackcollapse-oratrace-2.pl  | ./flamegraph.pl > test.svg
+ ```
+
